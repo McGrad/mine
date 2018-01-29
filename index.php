@@ -1,5 +1,6 @@
 <?php
 
-require './frameWork/lib/mine.php';
+require './frameWork/frameWork.php';
 
-mine::start();
+echo 'hello world !';
+
