@@ -100,6 +100,7 @@ final class FrameWork {
 
         $file_arr = array(
             FrameWork_Fun_PATH.'/Function.php',
+            FrameWork_CORE_PATH.'/Controller.class.php',
             FrameWork_CORE_PATH.'/Application.class.php'
         );
 
