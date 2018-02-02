@@ -91,6 +91,9 @@ final class FrameWork {
 
         }
 
+        //创建提示模板
+        is_file(APP_TPL_PATH.'/hint.html') || copy(FrameWork_DATA_PATH.'/Tpl/hint.html',APP_TPL_PATH.'/hint.html');
+
     }
 
     /**

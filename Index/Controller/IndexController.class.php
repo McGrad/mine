@@ -6,23 +6,34 @@
 	 */
 	class IndexController extends Controller
 	{
-        
+
 		public function __construct() {
 
 			parent::__construct();
 
 		}
 
-		public function __before() {
+		public function _before() {
 
-			echo 'aaaaaaaa<br />';
+            echo '1111<br />';
 
 		}
 		
 		public function index()
 		{
-			echo 'hello world !';
+//		    echo $_SERVER['HTTP_REFERER'];
+            $this->success('测试成功','/aaaaa','5');
 		}
+
+		public function test(){
+
+		    echo '2222';die;
+
+            $this->error('测试失败','/index','5');
+
+        }
+
+
 	}
 
 ?>

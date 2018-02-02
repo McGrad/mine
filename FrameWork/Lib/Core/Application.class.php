@@ -92,7 +92,11 @@ str;
 
     	$className = ucwords($className);
 
-    	require APP_CONTROLLER_PATH . '/' . $className .'.class.php';
+    	$controller_path = APP_CONTROLLER_PATH . '/' . $className .'.class.php';
+
+    	is_file($controller_path) || die('controller is not found !');
+
+        require $controller_path;
 
     }
 
@@ -144,7 +148,9 @@ str;
 
     	$obj_controller = new $controller();
 
-    	$obj_controller->$method_data();
+    	method_exists($obj_controller,$method_data) || die('method is not found !!');
+
+        $obj_controller->$method_data();
 
     }
 
