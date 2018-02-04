@@ -22,12 +22,10 @@
 		public function index()
 		{
 //		    echo $_SERVER['HTTP_REFERER'];
-            $this->success('测试成功','/aaaaa','5');
+            $this->success('测试成功','','5');
 		}
 
 		public function test(){
-
-		    echo '2222';die;
 
             $this->error('测试失败','/index','5');
 
