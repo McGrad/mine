@@ -50,6 +50,10 @@ final class FrameWork {
 
         //定义应用文件目录
         define('ROOT_PATH',dirname(FrameWork_PATH));
+        //定义临时文件目录
+        define('TMP_PATH',ROOT_PATH.'/Tmp');
+        //定义日志目录
+        define('LOG_PATH',TMP_PATH.'/Log');
 
         //定义模块目录
         define('APP_PATH',ROOT_PATH.'/'.APP_NAME);
@@ -82,7 +86,9 @@ final class FrameWork {
             APP_TPL_PATH,
             APP_CONTROLLER_PATH,
             APP_MODEL_PATH,
-            APP_PUBLIC_PATH
+            APP_PUBLIC_PATH,
+            TMP_PATH,
+            LOG_PATH
         );
 
 	    foreach ($path_arr as $k => $val) {
@@ -104,7 +110,8 @@ final class FrameWork {
         $file_arr = array(
             FrameWork_Fun_PATH.'/Function.php',
             FrameWork_CORE_PATH.'/Controller.class.php',
-            FrameWork_CORE_PATH.'/Application.class.php'
+            FrameWork_CORE_PATH.'/Application.class.php',
+            FrameWork_CORE_PATH.'/Log.class.php',
         );
 
         foreach ($file_arr as $k => $val ) {

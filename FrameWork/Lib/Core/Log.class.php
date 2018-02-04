@@ -16,7 +16,7 @@ class log
      * @param int $type     错误类型
      * @param null $dest    日志保存路径
      */
-    static public function write($msg,$evel='ERROR',$type=3,$log_path=null) {
+    static public function write($msg,$level='ERROR',$type=3,$log_path=null) {
 
         if ( !C('SAVE_LOG') ) return;
 
@@ -27,8 +27,8 @@ class log
 
         }
 
-        if ( is_dir(LOG_PATH) ) error_log('[TIME]:'.date('Y-m-d H:i:s').'{$level}:{$msg}\r\n',$type,$log_path);
- 
+        if ( is_dir(LOG_PATH) ) error_log('[TIME]:'.date('Y-m-d H:i:s').$level.':'.$msg.'\r\n',$type,$log_path);
+
     }
 
 }

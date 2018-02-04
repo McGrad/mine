@@ -21,6 +21,7 @@
 		
 		public function index()
 		{
+		    log::write('hello world !');
 //		    echo $_SERVER['HTTP_REFERER'];
             $this->success('测试成功','','5');
 		}
