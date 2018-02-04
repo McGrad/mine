@@ -45,49 +45,45 @@ function C( $var = NULL, $value = NULL ) {
 
     //初始化配置项
     static $config_arr = array();
-
     //加载配置项
     if ( is_array($var) ) {
-
         /**
          * array_merge 合并数组     （键名相同的会被覆盖）
          * array_change_key_case    将数组的所有键转换为大写
          */
         $config_arr = array_merge($config_arr,array_change_key_case($var,CASE_UPPER));
-
         //防止程序继续向下执行，终止程序
         return;
-
     }
 
     //读取配置项
     if ( is_string( $var ) ) {
-
         //转换成大写（配置项参数均为大写）
         $var = strtoupper($var);
-
         //两个参数时，配置项的值
         if ( !is_null($value) ) {
-
             $config_arr[$var] = $value;
-
             //终止程序
             return;
-
         }
-
         return isset($config_arr[$var]) ? $config_arr[$var] : NULL;
-
     }
 
     //返回所有配置项
     if ( is_null($var) && is_null($value) ) {
-
         return $config_arr;
-
     }
+
+}
+
+/**
+ *
+ */
+function halt() {
 
 
 
 }
+
+
 
