@@ -23,12 +23,15 @@ class log
         //创建日志路径文件
         if (is_null($log_path)) {
 
-            $log_path =  LOG_PATH .'/'.date('Y-m-d'.'.log');
+            $log_path =  LOG_PATH .'/'.date('Y-m-d',time()).'.log';
 
         }
 
-        if ( is_dir(LOG_PATH) ) error_log('[TIME]:'.date('Y-m-d H:i:s').$level.':'.$msg.'\r\n',$type,$log_path);
+        $msg = '[TIME] : '.date('Y-m-d H:i:s') . "\r\n[" . $level . '] : ' . $msg . "\r\n";
+
+        if ( is_dir(LOG_PATH) ) error_log($msg,$type,$log_path);
 
     }
 
 }
+?>

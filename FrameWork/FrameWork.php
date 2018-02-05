@@ -19,9 +19,24 @@ final class FrameWork {
 
 		self::_set_const();
 
-		self::_create_dir();
+		//是否开启调试模式（默认不开启）
+		defined('DEBUG') || define('DEBUG',false);
 
-		self::_import_file();
+		if( DEBUG ) {
+
+            self::_create_dir();
+
+            self::_import_file();
+
+        } else {
+
+		    //屏蔽所有报错信息——安全性考虑
+		    error_reporting(0);
+
+		    require TMP_PATH.'/tmp_core.php';
+
+        }
+
 
 		Application::run();
 
@@ -114,16 +129,23 @@ final class FrameWork {
             FrameWork_CORE_PATH.'/Log.class.php',
         );
 
+        $str = '';
+
         foreach ($file_arr as $k => $val ) {
+
+            $str .= trim(substr(file_get_contents($val),5,-2));
 
             require_once $val;
 
         }
+
+        $str = "<?php\r\n".$str;
+
+        file_put_contents(TMP_PATH.'/tmp_core.php',$str) || die('access not allowed !!!');
 
     }
 
 }
 
 frameWork::run();
-
-
+?>
