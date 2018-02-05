@@ -121,8 +121,9 @@ str;
 		
 		public function index()
 		{
-			echo 'hello world !';
+			echo 'hello world !!! 欢迎使用我的PHP框架';
 		}
+		
 	}
 
 ?>
@@ -156,3 +157,4 @@ str;
 
 
 }
+?>

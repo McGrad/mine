@@ -8,5 +8,7 @@ return array(
 		//访问控制器
 		'DEFAULT_CONTROL_SIMPLE' 	=> 	'act',
 		//访问方法
-		'DEFAULT_METHOD_SIMPLE'		=>	'm'
+		'DEFAULT_METHOD_SIMPLE'		=>	'm',
+        //是否开启日志
+        'SAVE_LOG'                  => 'true'
 	);

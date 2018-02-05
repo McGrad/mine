@@ -19,9 +19,24 @@ final class FrameWork {
 
 		self::_set_const();
 
-		self::_create_dir();
+		//是否开启调试模式（默认不开启）
+		defined('DEBUG') || define('DEBUG',false);
 
-		self::_import_file();
+		if( DEBUG ) {
+
+            self::_create_dir();
+
+            self::_import_file();
+
+        } else {
+
+		    //屏蔽所有报错信息——安全性考虑
+		    error_reporting(0);
+
+		    require TMP_PATH.'/tmp_core.php';
+
+        }
+
 
 		Application::run();
 
@@ -50,6 +65,10 @@ final class FrameWork {
 
         //定义应用文件目录
         define('ROOT_PATH',dirname(FrameWork_PATH));
+        //定义临时文件目录
+        define('TMP_PATH',ROOT_PATH.'/Tmp');
+        //定义日志目录
+        define('LOG_PATH',TMP_PATH.'/Log');
 
         //定义模块目录
         define('APP_PATH',ROOT_PATH.'/'.APP_NAME);
@@ -82,7 +101,9 @@ final class FrameWork {
             APP_TPL_PATH,
             APP_CONTROLLER_PATH,
             APP_MODEL_PATH,
-            APP_PUBLIC_PATH
+            APP_PUBLIC_PATH,
+            TMP_PATH,
+            LOG_PATH
         );
 
 	    foreach ($path_arr as $k => $val) {
@@ -104,19 +125,27 @@ final class FrameWork {
         $file_arr = array(
             FrameWork_Fun_PATH.'/Function.php',
             FrameWork_CORE_PATH.'/Controller.class.php',
-            FrameWork_CORE_PATH.'/Application.class.php'
+            FrameWork_CORE_PATH.'/Application.class.php',
+            FrameWork_CORE_PATH.'/Log.class.php',
         );
 
+        $str = '';
+
         foreach ($file_arr as $k => $val ) {
+
+            $str .= trim(substr(file_get_contents($val),5,-2));
 
             require_once $val;
 
         }
+
+        $str = "<?php\r\n".$str;
+
+        file_put_contents(TMP_PATH.'/tmp_core.php',$str) || die('access not allowed !!!');
 
     }
 
 }
 
 frameWork::run();
-
-
+?>
