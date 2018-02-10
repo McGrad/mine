@@ -10,7 +10,7 @@
  * 打印数据
  * @param $arr
  */
-function p( $arr ) {
+function P( $arr ) {
 
     echo '<pre>';
 
@@ -24,7 +24,7 @@ function p( $arr ) {
  * 打印数据类型
  * @param $arr
  */
-function v( $arr ) {
+function V( $arr ) {
 
     echo '<pre>';
 
@@ -77,11 +77,65 @@ function C( $var = NULL, $value = NULL ) {
 }
 
 /**
- *
+ * 跳转
+ * @param $url          跳转路径
+ * @param int $time     时间
+ * @param string $msg   提示信息
  */
-function halt() {
+function go( $url, $time=0, $msg='' ) {
 
+    if ( !headers_sent($url) ) {
+        $time == 0 ? header('location:'.$url) : header('refresh:'.$time.';url='.$url);
+        die($msg);
+    } else {
+        echo "<meta http-equiv='refresh' content='".$time.";url=".$url."'>";
+        if ( $time ) die($msg);
+    }
 
+}
 
+/**
+ * debug信息
+ */
+function halt($error,$level='ERROR',$type=3,$dest=NULL) {
+
+    //提示信息
+    $msg = is_array($error) ? $error['message'] : $error;
+
+    //写入日志
+    log::write($msg,$level,$type,$dest);
+
+    //DEBUG信息
+    $error_data = [];
+
+    if ( DEBUG ) {
+        //debug提示信息
+        if (!is_array($error)){
+            $trace_data = debug_backtrace();
+            $error_data['message'] = $msg;
+            $error_data['file'] = $trace_data[0]['file'];
+            $error_data['line'] = $trace_data[0]['line'];
+            $error_data['class'] = isset($trace_data[0]['class']) ? $trace_data[0]['class'] : '';
+            $error_data['function'] = isset($trace_data[0]['function']) ? $trace_data[0]['function'] : '';
+            ob_start();
+            debug_print_backtrace();
+            $error_data['trace'] = htmlspecialchars(ob_get_clean());
+        } else {
+            $error_data = $error;
+        }
+    } else {
+        if ( C('ERROR_URL') ) {
+            go(C('ERROR_URL'));
+        } else {
+            $error_data['message'] = $msg;
+        }
+    }
+
+    require FrameWork_DATA_PATH.'/Tpl/halt.html';
+    die;
+}
+
+function M($table) {
+    return new Model($table);
 }
 ?>
