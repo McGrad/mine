@@ -63,8 +63,25 @@ final class FrameWork {
         //定义框架方法文件目录
         define('FrameWork_Fun_PATH',FrameWork_LIB_PATH.'/Function');
 
+        //定义扩展类库目录
+        define('EXTENDS_PATH',FrameWork_PATH.'/Extends');
+        //定义扩展类目录
+        define('TOOL_PATH',EXTENDS_PATH.'/Tool');
+        //定义第三方类库目录
+        define('ORG_PATH',EXTENDS_PATH.'/Org');
+
         //定义应用文件目录
         define('ROOT_PATH',dirname(FrameWork_PATH));
+
+        //定义公共文件目录
+        define('COMMON_PATH',ROOT_PATH.'/Common');
+        //定义公共配置文件目录
+        define('COMMON_CONF_PATH',COMMON_PATH.'/Conf');
+        //定义公共模型文件目录
+        define('COMMON_MODEL_PATH',COMMON_PATH.'/Model');
+        //定义公共类文件目录
+        define('COMMON_LIB_PATH',COMMON_PATH.'/Lib');
+
         //定义临时文件目录
         define('TMP_PATH',ROOT_PATH.'/Tmp');
         //定义日志目录
@@ -88,12 +105,18 @@ final class FrameWork {
         //定义模块静态文件路径
         define('APP_PUBLIC_PATH',APP_TPL_PATH.'/Public');
 
+        //定义接值方式
+        define('IS_POST',($_SERVER['REQUEST_METHOD'] == 'POST') ? true : false);
+        isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' || define('IS_AJAX',false);
+
+        defined('IS_AJAX') || define('IS_AJAX',true);
+
 	}
 
 	/**
      * 创建文件
      */
-	public function _create_dir () {
+	public static function _create_dir () {
 
 	    $path_arr = array(
             APP_PATH,
@@ -103,7 +126,11 @@ final class FrameWork {
             APP_MODEL_PATH,
             APP_PUBLIC_PATH,
             TMP_PATH,
-            LOG_PATH
+            LOG_PATH,
+            COMMON_PATH,
+            COMMON_CONF_PATH,
+            COMMON_MODEL_PATH,
+            COMMON_LIB_PATH
         );
 
 	    foreach ($path_arr as $k => $val) {
@@ -120,7 +147,7 @@ final class FrameWork {
     /**
      * 载入核心文件
      */
-    public function _import_file () {
+    public static function _import_file () {
 
         $file_arr = array(
             FrameWork_Fun_PATH.'/Function.php',

@@ -5,7 +5,9 @@
  */
 class Controller
 {
-	
+
+    private $assign_data = array();
+
 	public function __construct() {
 
         /**
@@ -56,6 +58,39 @@ class Controller
 
         echo $url;die;
 
+    }
+
+    /**
+     * 渲染模板
+     * @param null $tpl
+     */
+    protected function display($tpl=NULL) {
+
+        //未传参
+        if ( is_null($tpl) ) {
+            $path = APP_TPL_PATH.'/'.CONTROLLER.'/'.METHOD.'.html';
+        } else {
+            $ext_tpl = strrchr($tpl,'.');
+            $tpl = empty($ext_tpl) ? $tpl.'.html' : $tpl;
+            $path = APP_TPL_PATH.'/'.CONTROLLER.'/'.$tpl;
+        }
+
+        is_file($path) || halt($path .'模板不存在');
+
+        //渲染数据
+        extract($this->assign_data);
+
+        include $path;
+
+    }
+
+    /**
+     * 渲染数据
+     * @param $var
+     * @param $value
+     */
+    protected function assign($var,$value){
+        $this->assign_data[$var] = $value;
     }
 
 
