@@ -138,4 +138,14 @@ function halt($error,$level='ERROR',$type=3,$dest=NULL) {
 function M($table) {
     return new Model($table);
 }
+
+function D($table) {
+
+    $table = ucfirst($table);
+
+    $table .= 'Model';
+
+    return new $table;
+}
+
 ?>

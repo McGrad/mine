@@ -154,7 +154,10 @@ class Model
 
     }
 
-
+    /**
+     * 查询单条数据
+     * @return mixed
+     */
     public function find() {
 
         $result = $this->limit(1)->select();
@@ -177,7 +180,11 @@ class Model
 
     }
 
-
+    /**
+     * 添加
+     * @param $data
+     * @return mixed
+     */
     public function add($data) {
 
         is_array($data) && !empty($data) || halt('The data that you want to insert is not allow empty !');
@@ -199,6 +206,27 @@ class Model
 
     }
 
+    public function update($data) {
+
+        if(empty($this->opt['where'])) halt('where 条件不能为空');
+
+        if (empty($data)) halt('参数错误');
+
+        $tmp_sql = '';
+
+        foreach ($data as $key => $value) {
+
+            $tmp_sql .= $this->_safe_deal($key).'= "'.$this->_safe_deal($value).'",';
+
+        }
+
+        $tmp_sql = substr($tmp_sql,0,-1);
+
+        $sql = 'UPDATE '.$this->table.' SET ' . $tmp_sql .$this->opt['where'];
+
+        return $this->execute($sql);
+
+    }
 
     /**
      * 执行sql
