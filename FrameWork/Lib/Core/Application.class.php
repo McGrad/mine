@@ -119,6 +119,7 @@ str;
         switch (true)
         {
             case strlen($className) > 10 && substr($className,-10) == 'Controller':
+
                 $controller_path = APP_CONTROLLER_PATH . '/' . $className .'.class.php';
                 if (!is_file($controller_path)) {
                     $empty_controller_path = APP_CONTROLLER_PATH . '/EmptyController.class.php';
@@ -129,7 +130,15 @@ str;
                     include $controller_path;
                 }
                 break;
+
+            case strlen($className) > 5 && substr($className,-5) == 'Model':
+
+                $controller_path = COMMON_MODEL_PATH . '/' .$className . '.class.php';
+                include $controller_path;
+                break;
+
             default:
+
                 $controller_path = TOOL_PATH . '/' . $className .'.class.php';
                 is_file($controller_path) || halt($controller_path.'   class is not found ');
                 include $controller_path;
